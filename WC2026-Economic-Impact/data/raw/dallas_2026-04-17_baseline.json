@@ -1,0 +1,13 @@
+{
+  "city": "Dallas",
+  "country": "USA",
+  "venue": "AT&T Stadium",
+  "capacity": 80000,
+  "matches_hosted": 7,
+  "date": "2026-04-17",
+  "date_type": "baseline",
+  "url": "https://www.booking.com/searchresults.html?ss=Dallas, Texas&checkin=2026-04-17&checkout=2026-04-18&group_adults=2&no_rooms=1&nflt=class%3D3%3Bclass%3D4%3Bclass%3D5&order=price",
+  "prices_found": [],
+  "median_price": null,
+  "error": null
+}

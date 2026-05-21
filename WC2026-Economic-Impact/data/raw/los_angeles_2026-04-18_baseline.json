@@ -1,0 +1,13 @@
+{
+  "city": "Los Angeles",
+  "country": "USA",
+  "venue": "SoFi Stadium",
+  "capacity": 70240,
+  "matches_hosted": 8,
+  "date": "2026-04-18",
+  "date_type": "baseline",
+  "url": "https://www.booking.com/searchresults.html?ss=Los Angeles, California&checkin=2026-04-18&checkout=2026-04-19&group_adults=2&no_rooms=1&nflt=class%3D3%3Bclass%3D4%3Bclass%3D5&order=price",
+  "prices_found": [],
+  "median_price": null,
+  "error": null
+}

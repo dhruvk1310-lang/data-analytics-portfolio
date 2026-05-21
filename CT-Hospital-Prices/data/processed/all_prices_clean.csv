@@ -1,0 +1,101 @@
+hospital,cpt_code,description,gross_charge,discounted_cash,min_negotiated,max_negotiated
+Bridgeport Hospital,27130,Total hip arthroplasty,21912.84,8502.85,7875.52,17172.35
+Bridgeport Hospital,27447,Total knee arthroplasty,27251.1,14858.78,11677.88,21100.27
+Bridgeport Hospital,36415,Venipuncture / blood draw,33.18,18.1,13.7,22.32
+Bridgeport Hospital,43239,EGD w/ biopsy,2062.61,810.97,723.7,1567.13
+Bridgeport Hospital,45378,"Colonoscopy, diagnostic",1758.98,965.79,872.89,1151.98
+Bridgeport Hospital,70450,CT Head/Brain w/o contrast,943.0,385.36,294.96,683.65
+Bridgeport Hospital,70553,MRI Brain w/o & w/ contrast,1850.38,688.31,529.34,1124.73
+Bridgeport Hospital,71046,Chest X-ray 2 views,238.56,110.58,97.85,162.09
+Bridgeport Hospital,72148,MRI Lumbar Spine w/o contrast,1456.45,634.76,533.59,1073.4
+Bridgeport Hospital,74177,CT Abdomen & Pelvis w/ contrast,1394.26,546.29,516.23,901.18
+Bridgeport Hospital,77067,"Screening mammogram, bilateral",371.04,153.41,138.35,249.86
+Bridgeport Hospital,80048,Basic metabolic panel,118.48,58.69,50.97,78.58
+Bridgeport Hospital,82565,Creatinine blood test,50.53,25.83,20.99,30.51
+Bridgeport Hospital,83036,Hemoglobin A1c,69.1,29.12,27.59,44.8
+Bridgeport Hospital,85025,Complete blood count w/ differential,77.69,35.55,29.02,54.13
+Bridgeport Hospital,93000,Electrocardiogram w/ interpretation,121.45,53.98,45.64,81.89
+Bridgeport Hospital,93306,Transthoracic echocardiogram,1263.72,684.1,644.89,875.12
+Bridgeport Hospital,99213,"Established patient office visit, low complexity",161.39,62.24,55.57,111.36
+Bridgeport Hospital,99284,"Emergency dept visit, moderate severity",1362.63,647.26,519.83,1024.12
+Bridgeport Hospital,99285,"Emergency dept visit, high severity",2204.77,1165.6,1099.06,1511.32
+Hartford Hospital,27130,Total hip arthroplasty,36465.47,14626.78,13874.87,26243.39
+Hartford Hospital,27447,Total knee arthroplasty,35207.77,17602.19,14519.69,25842.04
+Hartford Hospital,36415,Venipuncture / blood draw,47.69,22.35,18.91,36.07
+Hartford Hospital,43239,EGD w/ biopsy,3261.63,1477.4,1377.2,2275.38
+Hartford Hospital,45378,"Colonoscopy, diagnostic",2632.91,927.52,858.89,1803.8
+Hartford Hospital,70450,CT Head/Brain w/o contrast,1181.91,629.51,535.22,906.53
+Hartford Hospital,70553,MRI Brain w/o & w/ contrast,2254.99,996.53,801.15,1752.2
+Hartford Hospital,71046,Chest X-ray 2 views,327.92,148.59,122.69,249.32
+Hartford Hospital,72148,MRI Lumbar Spine w/o contrast,2386.12,1108.41,860.73,1611.36
+Hartford Hospital,74177,CT Abdomen & Pelvis w/ contrast,1910.09,942.11,890.85,1209.5
+Hartford Hospital,77067,"Screening mammogram, bilateral",456.1,238.8,218.93,353.24
+Hartford Hospital,80048,Basic metabolic panel,173.83,69.83,62.58,108.3
+Hartford Hospital,82565,Creatinine blood test,77.55,35.99,28.83,56.92
+Hartford Hospital,83036,Hemoglobin A1c,94.43,51.88,41.83,75.54
+Hartford Hospital,85025,Complete blood count w/ differential,117.29,47.62,40.45,78.49
+Hartford Hospital,93000,Electrocardiogram w/ interpretation,177.74,96.28,77.13,115.26
+Hartford Hospital,93306,Transthoracic echocardiogram,1589.37,761.29,609.64,980.65
+Hartford Hospital,99213,"Established patient office visit, low complexity",232.35,123.5,106.65,177.5
+Hartford Hospital,99284,"Emergency dept visit, moderate severity",1938.01,807.47,657.02,1380.04
+Hartford Hospital,99285,"Emergency dept visit, high severity",3306.91,1224.56,923.56,2281.75
+Stamford Hospital,27130,Total hip arthroplasty,34494.63,18072.42,16278.97,25294.31
+Stamford Hospital,27447,Total knee arthroplasty,40245.3,14194.0,12051.12,26892.56
+Stamford Hospital,36415,Venipuncture / blood draw,53.07,28.51,26.86,33.38
+Stamford Hospital,43239,EGD w/ biopsy,3104.18,1441.84,1256.12,2052.48
+Stamford Hospital,45378,"Colonoscopy, diagnostic",2750.68,1148.3,894.32,2027.47
+Stamford Hospital,70450,CT Head/Brain w/o contrast,1263.54,541.56,419.89,959.24
+Stamford Hospital,70553,MRI Brain w/o & w/ contrast,2583.7,1225.58,1069.84,1830.92
+Stamford Hospital,71046,Chest X-ray 2 views,322.38,167.05,157.31,241.34
+Stamford Hospital,72148,MRI Lumbar Spine w/o contrast,2175.33,1098.71,958.98,1620.02
+Stamford Hospital,74177,CT Abdomen & Pelvis w/ contrast,2162.92,828.18,646.79,1727.73
+Stamford Hospital,77067,"Screening mammogram, bilateral",471.8,236.06,206.22,368.39
+Stamford Hospital,80048,Basic metabolic panel,174.26,79.29,74.88,133.22
+Stamford Hospital,82565,Creatinine blood test,72.25,35.62,32.26,57.76
+Stamford Hospital,83036,Hemoglobin A1c,89.73,39.84,37.71,68.74
+Stamford Hospital,85025,Complete blood count w/ differential,117.63,45.52,40.3,73.23
+Stamford Hospital,93000,Electrocardiogram w/ interpretation,184.07,77.05,61.63,111.52
+Stamford Hospital,93306,Transthoracic echocardiogram,1709.58,701.55,656.94,1217.82
+Stamford Hospital,99213,"Established patient office visit, low complexity",261.64,99.28,93.83,192.93
+Stamford Hospital,99284,"Emergency dept visit, moderate severity",2166.37,772.01,683.76,1668.15
+Stamford Hospital,99285,"Emergency dept visit, high severity",3078.89,1605.17,1418.87,2248.88
+UConn Health,27130,Total hip arthroplasty,25850.85,11126.13,9178.75,19606.18
+UConn Health,27447,Total knee arthroplasty,31982.58,17374.49,13611.41,19725.88
+UConn Health,36415,Venipuncture / blood draw,38.77,17.45,15.07,27.45
+UConn Health,43239,EGD w/ biopsy,2241.18,1050.21,992.23,1499.56
+UConn Health,45378,"Colonoscopy, diagnostic",1983.98,789.47,705.43,1335.57
+UConn Health,70450,CT Head/Brain w/o contrast,933.46,503.15,434.34,627.43
+UConn Health,70553,MRI Brain w/o & w/ contrast,2142.17,911.44,683.64,1596.0
+UConn Health,71046,Chest X-ray 2 views,276.42,103.53,81.16,212.92
+UConn Health,72148,MRI Lumbar Spine w/o contrast,1780.27,747.46,608.86,1191.82
+UConn Health,74177,CT Abdomen & Pelvis w/ contrast,1654.34,894.05,743.32,1224.28
+UConn Health,77067,"Screening mammogram, bilateral",398.24,164.16,127.7,256.12
+UConn Health,80048,Basic metabolic panel,124.44,56.56,46.53,92.4
+UConn Health,82565,Creatinine blood test,59.79,28.93,25.92,45.71
+UConn Health,83036,Hemoglobin A1c,76.57,39.73,31.23,56.02
+UConn Health,85025,Complete blood count w/ differential,100.84,37.54,34.45,65.41
+UConn Health,93000,Electrocardiogram w/ interpretation,128.9,58.17,51.2,102.24
+UConn Health,93306,Transthoracic echocardiogram,1291.94,656.54,584.83,929.15
+UConn Health,99213,"Established patient office visit, low complexity",206.26,80.95,61.52,155.31
+UConn Health,99284,"Emergency dept visit, moderate severity",1666.62,695.89,640.0,1051.51
+UConn Health,99285,"Emergency dept visit, high severity",2575.02,1276.28,1108.94,1678.57
+Yale New Haven Hospital,27130,Total hip arthroplasty,43346.29,22573.51,20192.04,30781.26
+Yale New Haven Hospital,27447,Total knee arthroplasty,46246.09,18549.47,15932.95,31506.42
+Yale New Haven Hospital,36415,Venipuncture / blood draw,53.51,21.26,18.87,38.23
+Yale New Haven Hospital,43239,EGD w/ biopsy,3408.82,1655.19,1520.18,2140.73
+Yale New Haven Hospital,45378,"Colonoscopy, diagnostic",3066.4,1161.89,1053.14,2241.76
+Yale New Haven Hospital,70450,CT Head/Brain w/o contrast,1454.96,674.6,544.64,1034.33
+Yale New Haven Hospital,70553,MRI Brain w/o & w/ contrast,2849.17,1319.22,1124.48,2263.49
+Yale New Haven Hospital,71046,Chest X-ray 2 views,380.48,162.93,131.0,254.92
+Yale New Haven Hospital,72148,MRI Lumbar Spine w/o contrast,2745.97,1168.62,1057.52,1669.86
+Yale New Haven Hospital,74177,CT Abdomen & Pelvis w/ contrast,2199.31,1038.1,971.75,1427.74
+Yale New Haven Hospital,77067,"Screening mammogram, bilateral",575.67,226.6,173.36,376.23
+Yale New Haven Hospital,80048,Basic metabolic panel,195.51,88.42,69.74,120.0
+Yale New Haven Hospital,82565,Creatinine blood test,88.53,37.06,33.56,70.21
+Yale New Haven Hospital,83036,Hemoglobin A1c,97.77,36.08,27.88,64.15
+Yale New Haven Hospital,85025,Complete blood count w/ differential,132.67,62.98,54.61,95.5
+Yale New Haven Hospital,93000,Electrocardiogram w/ interpretation,194.3,83.11,66.57,132.01
+Yale New Haven Hospital,93306,Transthoracic echocardiogram,1822.3,893.87,751.25,1417.7
+Yale New Haven Hospital,99213,"Established patient office visit, low complexity",298.66,129.04,97.76,208.16
+Yale New Haven Hospital,99284,"Emergency dept visit, moderate severity",2330.39,1103.17,889.05,1822.88
+Yale New Haven Hospital,99285,"Emergency dept visit, high severity",3527.94,1741.61,1540.41,2659.92

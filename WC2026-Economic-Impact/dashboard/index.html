@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIFA World Cup 2026 — Hotel Surge Analysis</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg:#0d1117; --surface:#161b27; --surface2:#1f2740; --border:#2a3452;
+      --gold:#D4AF37; --gold-dim:#a88c2a; --green:#00A651; --red:#e05c5c;
+      --blue:#4a9eff; --text:#e8ecf0; --muted:#8896ab;
+      --usa:#4a9eff; --canada:#ff6b6b; --mexico:#56cf7a;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+         background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
+
+    /* HEADER */
+    .header{background:linear-gradient(135deg,#0d1117,#1a2235 50%,#0d1117);
+            border-bottom:2px solid var(--gold);padding:18px 28px;
+            display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .header-title{font-size:20px;font-weight:700;}
+    .header-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+    .data-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;
+                padding:4px 10px;border-radius:4px;letter-spacing:.5px;}
+    .badge-live{background:rgba(0,166,81,.2);color:var(--green);border:1px solid var(--green);}
+    .badge-demo{background:rgba(212,175,55,.2);color:var(--gold);border:1px solid var(--gold);}
+    select{background:var(--surface2);color:var(--text);border:1px solid var(--border);
+           padding:7px 28px 7px 12px;border-radius:6px;font-size:13px;cursor:pointer;
+           appearance:none;
+           background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238896ab'/%3E%3C/svg%3E");
+           background-repeat:no-repeat;background-position:right 10px center;}
+    select:focus{outline:none;border-color:var(--gold);}
+
+    /* DEMO BANNER */
+    #demo-banner{display:none;background:rgba(212,175,55,.08);border-bottom:1px solid var(--gold-dim);
+                 padding:9px 28px;font-size:12px;color:var(--gold);}
+
+    /* STAT CARDS */
+    .main{padding:16px 20px 28px;display:flex;flex-direction:column;gap:14px;}
+    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+    .kpi{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px;}
+    .kpi.gold{border-top:3px solid var(--gold);}
+    .kpi.green{border-top:3px solid var(--green);}
+    .kpi.blue{border-top:3px solid var(--blue);}
+    .kpi.red{border-top:3px solid var(--red);}
+    .kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+    .kpi-value{font-size:26px;font-weight:700;line-height:1;}
+    .kpi-sub{font-size:11px;color:var(--muted);margin-top:5px;}
+
+    /* STAT CARDS — REGRESSION */
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+    .stat-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px;}
+    .stat-body{font-size:13px;color:var(--text);}
+    .stat-body strong{color:var(--gold);}
+    .stat-body .r2{font-size:18px;font-weight:700;color:var(--green);}
+    .corr-item{display:flex;justify-content:space-between;padding:5px 0;
+               border-bottom:1px solid var(--border);font-size:12px;}
+    .corr-item:last-child{border-bottom:none;}
+    .corr-r{font-weight:700;}
+    .sig{color:var(--gold);}
+
+    /* CHARTS */
+    .chart-row{display:grid;gap:12px;}
+    .r2col{grid-template-columns:3fr 2fr;}
+    .r3col{grid-template-columns:1fr 1fr 1fr;}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 22px;}
+    .card-title{font-size:13px;font-weight:600;margin-bottom:3px;
+                display:flex;align-items:center;justify-content:space-between;}
+    .card-title .tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;
+                     background:rgba(212,175,55,.15);color:var(--gold);}
+    .card-sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+    canvas{max-height:280px;}
+
+    /* DETAIL PANEL */
+    #detail-panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 22px;}
+    .d-placeholder{color:var(--muted);font-size:13px;text-align:center;padding:28px 0;}
+    .d-city{font-size:18px;font-weight:700;}
+    .d-venue{font-size:12px;color:var(--muted);margin-top:2px;margin-bottom:14px;}
+    .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+    .d-metric{background:var(--surface2);border-radius:6px;padding:11px 13px;}
+    .d-metric-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+    .d-metric-val{font-size:19px;font-weight:700;margin-top:2px;}
+    .d-badges{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;}
+    .d-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px;}
+    .b-usa{background:rgba(74,158,255,.18);color:var(--usa);}
+    .b-canada{background:rgba(255,107,107,.18);color:var(--canada);}
+    .b-mexico{background:rgba(86,207,122,.18);color:var(--mexico);}
+    .b-gold{background:rgba(212,175,55,.22);color:var(--gold);}
+
+    /* TABLE */
+    .table-wrap{overflow-x:auto;margin-top:8px;}
+    table{width:100%;border-collapse:collapse;font-size:13px;}
+    thead th{text-align:left;padding:9px 13px;border-bottom:1px solid var(--border);
+             color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;
+             cursor:pointer;white-space:nowrap;user-select:none;}
+    thead th:hover{color:var(--text);}
+    thead th.asc::after{content:" ▲";color:var(--gold);}
+    thead th.desc::after{content:" ▼";color:var(--gold);}
+    tbody tr{cursor:pointer;transition:background .12s;}
+    tbody tr:hover{background:rgba(212,175,55,.06);}
+    tbody tr.selected{background:rgba(212,175,55,.1);}
+    tbody td{padding:9px 13px;border-bottom:1px solid rgba(42,52,82,.5);white-space:nowrap;}
+    tbody tr:last-child td{border-bottom:none;}
+    .cdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+    .surge-bar{display:inline-block;height:7px;border-radius:3px;
+               background:linear-gradient(90deg,var(--gold-dim),var(--gold));
+               margin-left:8px;vertical-align:middle;}
+
+    /* LOADING */
+    #loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;
+             align-items:center;justify-content:center;z-index:999;gap:14px;}
+    #loading .spinner{width:40px;height:40px;border:3px solid var(--border);
+                      border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* FOOTER */
+    .footer{text-align:center;padding:14px 20px;color:var(--muted);font-size:11px;
+            border-top:1px solid var(--border);}
+    .source-link{color:var(--gold);text-decoration:none;}
+    .source-link:hover{text-decoration:underline;}
+
+    @media(max-width:1100px){.r2col{grid-template-columns:1fr;}.r3col{grid-template-columns:1fr 1fr;}}
+    @media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr);}.r3col{grid-template-columns:1fr;}.stat-row{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div style="color:var(--muted);font-size:13px">Loading analysis data…</div>
+</div>
+
+<div class="header">
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:26px">⚽</span>
+      <div>
+        <div class="header-title">FIFA World Cup 2026 — Hotel Surge Analysis</div>
+        <div class="header-sub">Scraped hotel prices · pandas/numpy analysis · 16 host cities</div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <span id="data-source-badge" class="data-badge badge-demo">⚠ Demo Data</span>
+    <span id="data-date" style="font-size:11px;color:var(--muted)"></span>
+    <select id="filter-country" onchange="dash.filter()">
+      <option value="all">All Countries</option>
+      <option value="USA">🇺🇸 USA</option>
+      <option value="Canada">🇨🇦 Canada</option>
+      <option value="Mexico">🇲🇽 Mexico</option>
+    </select>
+  </div>
+</div>
+
+<div id="demo-banner">
+  ⚠ &nbsp;This dashboard is running on <strong>synthetic demo data</strong>.
+  Run <code>python scraper/scraper.py</code> then <code>python analysis/analyze.py</code>
+  to populate with real scraped Booking.com prices.
+</div>
+
+<div class="main">
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi gold">
+      <div class="kpi-label">Total Economic Impact</div>
+      <div class="kpi-value" id="kpi-impact">—</div>
+      <div class="kpi-sub" id="kpi-impact-sub">published host committee estimates</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Avg Hotel Surge</div>
+      <div class="kpi-value" id="kpi-surge">—</div>
+      <div class="kpi-sub">scraped match vs baseline dates</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-label">Highest Surge City</div>
+      <div class="kpi-value" id="kpi-top-surge-city">—</div>
+      <div class="kpi-sub" id="kpi-top-surge-val"></div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-label">Peak Nightly Rate</div>
+      <div class="kpi-value" id="kpi-peak-rate">—</div>
+      <div class="kpi-sub" id="kpi-peak-city"></div>
+    </div>
+  </div>
+
+  <!-- Chart row 1: Surge bar + Detail panel -->
+  <div class="chart-row r2col">
+    <div class="card">
+      <div class="card-title">Hotel Surge % by City <span class="tag">Scraped Data</span></div>
+      <div class="card-sub">Match-date median vs same-weekday baseline · <span style="color:var(--gold)">Gold = above average</span></div>
+      <div style="height:280px"><canvas id="surge-chart"></canvas></div>
+    </div>
+    <div id="detail-panel">
+      <div style="font-size:13px;font-weight:600;margin-bottom:10px">City Detail</div>
+      <div class="d-placeholder">← Click a row in the table<br>to load city details</div>
+    </div>
+  </div>
+
+  <!-- Chart row 2: Scatter regression + Match vs Impact -->
+  <div class="chart-row r2col">
+    <div class="card">
+      <div class="card-title">Baseline Rate vs Surge % — Regression <span class="tag">scipy OLS</span></div>
+      <div class="card-sub">Each dot = 1 city · line = OLS fit · r and p-value from scipy.stats.linregress</div>
+      <div style="height:260px"><canvas id="reg-chart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Matches Hosted vs Economic Impact</div>
+      <div class="card-sub">Bubble size = venue capacity · published impact estimates</div>
+      <div style="height:260px"><canvas id="scatter-chart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Correlation + Regression stats -->
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-title">Pearson Correlations</div>
+      <div id="corr-body" class="stat-body"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">OLS Regression — Hotel Surge</div>
+      <div id="reg-surge-body" class="stat-body"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">OLS Regression — Economic Impact</div>
+      <div id="reg-impact-body" class="stat-body"></div>
+    </div>
+  </div>
+
+  <!-- Country comparison -->
+  <div class="chart-row r3col">
+    <div class="card">
+      <div class="card-title">Total Impact by Country</div>
+      <div class="card-sub">Sum of published estimates</div>
+      <div style="height:200px"><canvas id="c-impact"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Avg Hotel Surge by Country</div>
+      <div class="card-sub">Mean scraped surge %</div>
+      <div style="height:200px"><canvas id="c-surge"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Avg Match-Week Rate by Country</div>
+      <div class="card-sub">Median scraped match-date price</div>
+      <div style="height:200px"><canvas id="c-rate"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Data table -->
+  <div class="card">
+    <div class="card-title" style="margin-bottom:4px">All 16 Host Cities — Full Dataset</div>
+    <div class="card-sub">Click headers to sort · click rows for city detail</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-col="city">City</th>
+            <th data-col="country">Country</th>
+            <th data-col="matches_hosted">Matches</th>
+            <th data-col="capacity">Capacity</th>
+            <th data-col="impact_usd_m">Impact ($M)</th>
+            <th data-col="baseline_median_usd">Base Rate</th>
+            <th data-col="match_median_usd">Match Rate</th>
+            <th data-col="hotel_surge_pct">Surge %</th>
+            <th data-col="source">Impact Source</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  ⚽ &nbsp;WC 2026 Hotel Surge Analysis &nbsp;|&nbsp;
+  Hotel prices: <a class="source-link" href="https://www.booking.com" target="_blank">Booking.com</a> (scraped via Playwright) &nbsp;|&nbsp;
+  Economic impact: published host committee reports &nbsp;|&nbsp;
+  Analysis: Python · pandas · numpy · scipy · scikit-learn
+</div>
+
+<script>
+// ─── helpers ────────────────────────────────────────────────────────────────
+const C = { USA:'#4a9eff', Canada:'#ff6b6b', Mexico:'#56cf7a' };
+const FLAGS = { USA:'🇺🇸', Canada:'🇨🇦', Mexico:'🇲🇽' };
+const fmt$ = v => v >= 1000 ? `$${(v/1000).toFixed(1)}B` : `$${Math.round(v)}M`;
+const fmtR = v => v != null ? `$${Math.round(v)}` : 'N/A';
+const fmtP = v => v != null ? `+${v.toFixed(1)}%` : 'N/A';
+const fmtN = v => v != null ? (+v).toLocaleString() : '—';
+
+// ─── main dashboard class ────────────────────────────────────────────────────
+class Dashboard {
+  constructor(data) {
+    this.raw  = data;
+    this.data = data;
+    this.cities     = data.cities;
+    this.filtered   = [...data.cities];
+    this.sortCol    = 'hotel_surge_pct';
+    this.sortDir    = 'desc';
+    this.selectedCity = null;
+    this.charts = {};
+    this.avgSurge = data.cities.reduce((s,c)=>s+c.hotel_surge_pct,0) / data.cities.length;
+    this.init();
+  }
+
+  init() {
+    this.updateKPIs();
+    this.renderSurge();
+    this.renderRegression();
+    this.renderScatter();
+    this.renderCountry();
+    this.renderCorrelations();
+    this.renderRegressionStats();
+    this.renderTable();
+    this.setupSort();
+  }
+
+  filter() {
+    const country = document.getElementById('filter-country').value;
+    this.filtered = country === 'all'
+      ? [...this.cities]
+      : this.cities.filter(c => c.country === country);
+    this.updateKPIs();
+    this.updateSurge();
+    this.updateRegression();
+    this.updateScatter();
+    this.renderTable();
+  }
+
+  // KPIs
+  updateKPIs() {
+    const d = this.filtered;
+    const totalImpact = d.reduce((s,c)=>s+(c.impact_usd_m||0),0);
+    const avgSurge    = d.reduce((s,c)=>s+c.hotel_surge_pct,0)/d.length;
+    const topSurge    = [...d].sort((a,b)=>b.hotel_surge_pct-a.hotel_surge_pct)[0];
+    const topRate     = [...d].sort((a,b)=>b.match_median_usd-a.match_median_usd)[0];
+
+    document.getElementById('kpi-impact').textContent = fmt$(totalImpact);
+    document.getElementById('kpi-impact-sub').textContent = `across ${d.length} host cities`;
+    document.getElementById('kpi-surge').textContent = fmtP(avgSurge);
+    document.getElementById('kpi-top-surge-city').textContent =
+      topSurge.city.split('/')[0].trim().split(' ').slice(0,2).join(' ');
+    document.getElementById('kpi-top-surge-val').textContent =
+      `${fmtP(topSurge.hotel_surge_pct)} above baseline`;
+    document.getElementById('kpi-peak-rate').textContent = fmtR(topRate.match_median_usd)+'/night';
+    document.getElementById('kpi-peak-city').textContent = topRate.city;
+  }
+
+  // Surge bar chart
+  renderSurge() {
+    const sorted = [...this.filtered].sort((a,b)=>b.hotel_surge_pct-a.hotel_surge_pct);
+    const ctx = document.getElementById('surge-chart').getContext('2d');
+    this.charts.surge = new Chart(ctx, {
+      type:'bar',
+      data:{
+        labels: sorted.map(c=>c.city.length>14?c.city.slice(0,13)+'…':c.city),
+        datasets:[{
+          data: sorted.map(c=>c.hotel_surge_pct),
+          backgroundColor: sorted.map(c=>c.hotel_surge_pct>=this.avgSurge?'#D4AF37cc':'#4a9effaa'),
+          borderColor:      sorted.map(c=>c.hotel_surge_pct>=this.avgSurge?'#D4AF37':'#4a9eff'),
+          borderWidth:1, borderRadius:3,
+        }]
+      },
+      options:{
+        indexAxis:'y', responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:ctx2=>{
+            const c=sorted[ctx2.dataIndex];
+            return[`+${ctx2.parsed.x.toFixed(1)}% surge`,
+                   `Base: ${fmtR(c.baseline_median_usd)}  →  Match: ${fmtR(c.match_median_usd)}/night`];
+          }}}
+        },
+        scales:{
+          x:{beginAtZero:true,max:140,grid:{color:'#1f2740'},
+             ticks:{color:'#8896ab',callback:v=>'+'+v+'%'}},
+          y:{grid:{display:false},ticks:{color:'#e8ecf0',font:{size:11}}}
+        }
+      }
+    });
+  }
+
+  updateSurge() {
+    const sorted = [...this.filtered].sort((a,b)=>b.hotel_surge_pct-a.hotel_surge_pct);
+    const ch = this.charts.surge;
+    ch.data.labels = sorted.map(c=>c.city.length>14?c.city.slice(0,13)+'…':c.city);
+    ch.data.datasets[0].data = sorted.map(c=>c.hotel_surge_pct);
+    ch.data.datasets[0].backgroundColor = sorted.map(c=>c.hotel_surge_pct>=this.avgSurge?'#D4AF37cc':'#4a9effaa');
+    ch.data.datasets[0].borderColor      = sorted.map(c=>c.hotel_surge_pct>=this.avgSurge?'#D4AF37':'#4a9eff');
+    ch.update('none');
+  }
+
+  // Regression scatter (baseline rate vs surge)
+  renderRegression() {
+    const byCountry = ['USA','Canada','Mexico'].map(cn=>({
+      label:cn,
+      data: this.filtered.filter(c=>c.country===cn).map(c=>({
+        x:c.baseline_median_usd, y:c.hotel_surge_pct, city:c.city
+      })),
+      backgroundColor: C[cn]+'aa', borderColor: C[cn], borderWidth:1, pointRadius:6,
+    }));
+
+    // Build regression line across all
+    const all = this.filtered.filter(c=>c.baseline_median_usd!=null);
+    const xs  = all.map(c=>c.baseline_median_usd);
+    const ys  = all.map(c=>c.hotel_surge_pct);
+    const n   = xs.length;
+    const mx  = xs.reduce((a,b)=>a+b,0)/n, my = ys.reduce((a,b)=>a+b,0)/n;
+    const num = xs.reduce((s,x,i)=>s+(x-mx)*(ys[i]-my),0);
+    const den = xs.reduce((s,x)=>s+(x-mx)**2,0);
+    const m   = num/den, b = my - m*mx;
+    const xRange = [Math.min(...xs), Math.max(...xs)];
+    const regLine = { label:`OLS fit`, data:[{x:xRange[0],y:m*xRange[0]+b},{x:xRange[1],y:m*xRange[1]+b}],
+                      type:'line', borderColor:'#D4AF37', borderWidth:1.5, pointRadius:0, borderDash:[4,3] };
+
+    const ctx = document.getElementById('reg-chart').getContext('2d');
+    this.charts.reg = new Chart(ctx, {
+      type:'scatter',
+      data:{ datasets:[...byCountry, regLine] },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{labels:{color:'#8896ab',usePointStyle:true,filter:i=>i.text!=='OLS fit'}},
+          tooltip:{callbacks:{label:ctx2=>{
+            if(!ctx2.raw.city) return null;
+            return [`${ctx2.raw.city}`, `Base $${ctx2.raw.x}/night → +${ctx2.raw.y.toFixed(1)}% surge`];
+          }}}
+        },
+        scales:{
+          x:{title:{display:true,text:'Baseline Rate (USD/night)',color:'#8896ab'},
+             ticks:{color:'#8896ab',callback:v=>'$'+v}, grid:{color:'#1f2740'}},
+          y:{title:{display:true,text:'Hotel Surge %',color:'#8896ab'},
+             ticks:{color:'#8896ab',callback:v=>'+'+v+'%'}, grid:{color:'#1f2740'}}
+        }
+      }
+    });
+  }
+
+  updateRegression() {
+    const byCountry = ['USA','Canada','Mexico'].map(cn=>({
+      label:cn,
+      data:this.filtered.filter(c=>c.country===cn).map(c=>({x:c.baseline_median_usd,y:c.hotel_surge_pct,city:c.city})),
+      backgroundColor:C[cn]+'aa', borderColor:C[cn], borderWidth:1, pointRadius:6,
+    }));
+    const all=this.filtered.filter(c=>c.baseline_median_usd!=null);
+    const xs=all.map(c=>c.baseline_median_usd), ys=all.map(c=>c.hotel_surge_pct);
+    const n=xs.length, mx=xs.reduce((a,b)=>a+b,0)/n, my=ys.reduce((a,b)=>a+b,0)/n;
+    const m=(xs.reduce((s,x,i)=>s+(x-mx)*(ys[i]-my),0))/(xs.reduce((s,x)=>s+(x-mx)**2,0));
+    const b=my-m*mx;
+    const xr=[Math.min(...xs),Math.max(...xs)];
+    const regLine={label:'OLS fit',data:[{x:xr[0],y:m*xr[0]+b},{x:xr[1],y:m*xr[1]+b}],
+                   type:'line',borderColor:'#D4AF37',borderWidth:1.5,pointRadius:0,borderDash:[4,3]};
+    this.charts.reg.data.datasets=[...byCountry,regLine];
+    this.charts.reg.update('none');
+  }
+
+  // Bubble scatter: matches vs impact
+  renderScatter() {
+    const byCountry = ['USA','Canada','Mexico'].map(cn=>({
+      label:cn,
+      data:this.filtered.filter(c=>c.country===cn).map(c=>({
+        x:c.matches_hosted, y:c.impact_usd_m||0,
+        r:Math.max(5,c.capacity/7000), city:c.city,
+      })),
+      backgroundColor:C[cn]+'aa', borderColor:C[cn], borderWidth:1,
+    }));
+    const ctx = document.getElementById('scatter-chart').getContext('2d');
+    this.charts.scat = new Chart(ctx, {
+      type:'bubble',
+      data:{datasets:byCountry},
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{labels:{color:'#8896ab',usePointStyle:true}},
+          tooltip:{callbacks:{label:ctx2=>[ctx2.raw.city, `${ctx2.raw.x} matches | ${fmt$(ctx2.raw.y)}`]}}
+        },
+        scales:{
+          x:{title:{display:true,text:'Matches Hosted',color:'#8896ab'},
+             ticks:{color:'#8896ab'},grid:{color:'#1f2740'},min:2,max:10},
+          y:{title:{display:true,text:'Economic Impact',color:'#8896ab'},
+             ticks:{color:'#8896ab',callback:v=>v>=1000?'$'+(v/1000).toFixed(1)+'B':'$'+v+'M'},
+             grid:{color:'#1f2740'}}
+        }
+      }
+    });
+  }
+
+  updateScatter() {
+    this.charts.scat.data.datasets = ['USA','Canada','Mexico'].map(cn=>({
+      label:cn,
+      data:this.filtered.filter(c=>c.country===cn).map(c=>({
+        x:c.matches_hosted,y:c.impact_usd_m||0,r:Math.max(5,c.capacity/7000),city:c.city
+      })),
+      backgroundColor:C[cn]+'aa', borderColor:C[cn], borderWidth:1,
+    }));
+    this.charts.scat.update('none');
+  }
+
+  // Country bar charts
+  renderCountry() {
+    const cs = this.raw.country_summary;
+    const colors = cs.map(r=>C[r.country]);
+    const labels = cs.map(r=>FLAGS[r.country]+' '+r.country);
+
+    const mkBar = (id, vals, labelFn) => {
+      const ctx = document.getElementById(id).getContext('2d');
+      return new Chart(ctx, {
+        type:'bar',
+        data:{labels, datasets:[{data:vals, backgroundColor:colors.map(c=>c+'cc'),
+              borderColor:colors, borderWidth:1, borderRadius:4}]},
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx2=>labelFn(ctx2.parsed.y)}}},
+          scales:{x:{grid:{display:false},ticks:{color:'#8896ab'}},
+                  y:{beginAtZero:true,grid:{color:'#1f2740'},ticks:{color:'#8896ab',callback:labelFn}}}
+        }
+      });
+    };
+
+    mkBar('c-impact', cs.map(r=>r.total_impact_usd_m),
+      v=>v>=1000?'$'+(v/1000).toFixed(1)+'B':'$'+Math.round(v)+'M');
+    mkBar('c-surge',  cs.map(r=>r.avg_surge_pct),  v=>'+'+v.toFixed(1)+'%');
+    mkBar('c-rate',   cs.map(r=>r.avg_match_rate),  v=>'$'+Math.round(v)+'/night');
+  }
+
+  // Correlation table
+  renderCorrelations() {
+    const corrs = this.raw.correlations;
+    const el = document.getElementById('corr-body');
+    el.innerHTML = Object.entries(corrs).map(([label, v])=>`
+      <div class="corr-item">
+        <span style="color:var(--muted);font-size:11px">${label}</span>
+        <span class="corr-r ${Math.abs(v.r)>0.5?'sig':''}" style="color:${Math.abs(v.r)>0.5?'var(--gold)':'var(--text)'}">
+          r=${v.r} ${v.p_value<0.05?'<span style="color:var(--green);font-size:10px">★sig</span>':''}
+        </span>
+      </div>
+    `).join('');
+  }
+
+  // Regression stats
+  renderRegressionStats() {
+    const reg = this.raw.regression;
+    const render = (elId, key, label) => {
+      const r = reg[key];
+      document.getElementById(elId).innerHTML = `
+        <div style="margin-bottom:10px">
+          <div class="r2" style="margin-bottom:2px">R² = ${r.r2}</div>
+          <div style="font-size:11px;color:var(--muted)">${(r.r2*100).toFixed(1)}% of variance explained</div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Equation:</div>
+        <div style="font-family:monospace;font-size:11px;color:var(--text);background:var(--surface2);
+                    padding:8px 10px;border-radius:4px;word-break:break-all">${r.equation}</div>
+        <div style="margin-top:10px;font-size:11px;color:var(--muted)">
+          Predictors: matches hosted + ln(capacity)
+        </div>
+      `;
+    };
+    render('reg-surge-body',  'hotel_surge',    'Hotel Surge');
+    render('reg-impact-body', 'economic_impact','Economic Impact');
+  }
+
+  // City detail panel
+  selectCity(cityName) {
+    this.selectedCity = cityName;
+    const city = this.cities.find(c=>c.city===cityName);
+    if (!city) return;
+
+    document.querySelectorAll('#tbody tr').forEach(tr=>{
+      tr.classList.toggle('selected', tr.dataset.city===cityName);
+    });
+
+    const cc = city.country==='USA'?'b-usa':city.country==='Canada'?'b-canada':'b-mexico';
+    document.getElementById('detail-panel').innerHTML = `
+      <div style="font-size:13px;font-weight:600;margin-bottom:10px">City Detail</div>
+      <div class="d-city">${FLAGS[city.country]} ${city.city}</div>
+      <div class="d-venue">${city.venue} · ${(+city.capacity).toLocaleString()} capacity</div>
+      <div class="d-grid">
+        <div class="d-metric">
+          <div class="d-metric-lbl">Baseline Rate</div>
+          <div class="d-metric-val">${fmtR(city.baseline_median_usd)}/night</div>
+        </div>
+        <div class="d-metric">
+          <div class="d-metric-lbl">Match-Week Rate</div>
+          <div class="d-metric-val" style="color:var(--blue)">${fmtR(city.match_median_usd)}/night</div>
+        </div>
+        <div class="d-metric">
+          <div class="d-metric-lbl">Hotel Surge</div>
+          <div class="d-metric-val" style="color:var(--gold)">${fmtP(city.hotel_surge_pct)}</div>
+        </div>
+        <div class="d-metric">
+          <div class="d-metric-lbl">Economic Impact</div>
+          <div class="d-metric-val" style="color:var(--green)">${fmt$(city.impact_usd_m)}</div>
+        </div>
+        <div class="d-metric">
+          <div class="d-metric-lbl">Matches Hosted</div>
+          <div class="d-metric-val">${city.matches_hosted}</div>
+        </div>
+        <div class="d-metric">
+          <div class="d-metric-lbl">Venue Capacity</div>
+          <div class="d-metric-val">${(+city.capacity).toLocaleString()}</div>
+        </div>
+      </div>
+      <div class="d-badges">
+        <span class="d-badge ${cc}">${city.country}</span>
+        ${city.source?`<span class="d-badge" style="font-size:10px;color:var(--muted);background:var(--surface2);padding:3px 8px;border-radius:8px">Source: ${city.source}</span>`:''}
+      </div>
+    `;
+  }
+
+  // Table
+  renderTable() {
+    const sorted = [...this.filtered].sort((a,b)=>{
+      const av=a[this.sortCol]??-Infinity, bv=b[this.sortCol]??-Infinity;
+      return this.sortDir==='desc'? bv-av : av-bv;
+    });
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = sorted.map(city=>{
+      const col = C[city.country];
+      const w = Math.round((city.hotel_surge_pct/140)*55);
+      return `<tr data-city="${city.city}" onclick="dash.selectCity('${city.city.replace(/'/g,"\\'")}')">
+        <td><span class="cdot" style="background:${col}"></span>${city.city}</td>
+        <td>${FLAGS[city.country]} ${city.country}</td>
+        <td style="text-align:center">${city.matches_hosted}</td>
+        <td>${(+city.capacity).toLocaleString()}</td>
+        <td style="color:var(--gold);font-weight:600">${fmt$(city.impact_usd_m)}</td>
+        <td>${fmtR(city.baseline_median_usd)}</td>
+        <td style="color:var(--blue);font-weight:600">${fmtR(city.match_median_usd)}</td>
+        <td>
+          <span style="color:${city.hotel_surge_pct>=this.avgSurge?'var(--gold)':'var(--text)'};font-weight:600">${fmtP(city.hotel_surge_pct)}</span>
+          <span class="surge-bar" style="width:${w}px"></span>
+        </td>
+        <td style="font-size:11px;color:var(--muted)">${city.source??'—'}</td>
+      </tr>`;
+    }).join('');
+    if (this.selectedCity) {
+      const sel = tbody.querySelector(`tr[data-city="${this.selectedCity}"]`);
+      if (sel) sel.classList.add('selected');
+    }
+  }
+
+  setupSort() {
+    document.querySelectorAll('thead th[data-col]').forEach(th=>{
+      th.addEventListener('click',()=>{
+        const col=th.dataset.col;
+        if(['city','country','venue','source'].includes(col)) return;
+        this.sortDir = this.sortCol===col && this.sortDir==='desc' ? 'asc' : 'desc';
+        this.sortCol = col;
+        document.querySelectorAll('thead th').forEach(t=>t.className='');
+        th.className = this.sortDir;
+        this.renderTable();
+      });
+    });
+    const initTh = document.querySelector('thead th[data-col="hotel_surge_pct"]');
+    if (initTh) initTh.className = 'desc';
+  }
+}
+
+// ─── bootstrap: try to load real data, fall back gracefully ─────────────────
+let dash;
+
+async function loadData() {
+  try {
+    // Requires python -m http.server 8080 from project root
+    const res = await fetch('../data/processed/dashboard_data.json');
+    if (!res.ok) throw new Error('not found');
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+(async () => {
+  const data = await loadData();
+  document.getElementById('loading').style.display = 'none';
+
+  if (!data) {
+    // Show instructions overlay
+    document.body.insertAdjacentHTML('afterbegin', `
+      <div style="position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;
+                  justify-content:center;z-index:998;padding:20px;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;
+                    padding:36px 40px;max-width:520px;text-align:center;">
+          <div style="font-size:36px;margin-bottom:14px">⚽</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:10px">Run the pipeline first</div>
+          <div style="color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:20px">
+            The dashboard reads from <code style="color:var(--gold)">data/processed/dashboard_data.json</code>
+            generated by the analysis script.
+          </div>
+          <div style="background:var(--surface2);border-radius:6px;padding:14px 18px;
+                      font-family:monospace;font-size:13px;text-align:left;color:var(--text)">
+            <span style="color:var(--muted)"># 1. Install deps</span><br>
+            pip install -r scraper/requirements.txt<br>
+            playwright install chromium<br><br>
+            <span style="color:var(--muted)"># 2. Scrape hotel prices</span><br>
+            python scraper/scraper.py<br><br>
+            <span style="color:var(--muted)"># 3. Run analysis</span><br>
+            python analysis/analyze.py<br><br>
+            <span style="color:var(--muted)"># 4. Serve dashboard</span><br>
+            python -m http.server 8080<br>
+            <span style="color:var(--muted)"># open localhost:8080/dashboard/</span><br><br>
+            <span style="color:var(--gold)"># Or use demo data:</span><br>
+            python analysis/analyze.py --demo
+          </div>
+        </div>
+      </div>
+    `);
+    return;
+  }
+
+  // Show demo banner if applicable
+  if (data.is_demo) {
+    document.getElementById('demo-banner').style.display = 'block';
+  } else {
+    document.getElementById('data-source-badge').className = 'data-badge badge-live';
+    document.getElementById('data-source-badge').textContent = '✓ Live Scraped Data';
+  }
+  document.getElementById('data-date').textContent = `Generated: ${data.generated}`;
+
+  dash = new Dashboard(data);
+})();
+</script>
+</body>
+</html>

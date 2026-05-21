@@ -1,0 +1,21 @@
+cpt_code,Bridgeport Hospital,Hartford Hospital,Stamford Hospital,UConn Health,Yale New Haven Hospital,label,category,full_desc,max_price,min_price,avg_price,dollar_gap,price_ratio,most_expensive,cheapest
+27130,21912.84,36465.47,34494.63,25850.85,43346.29,Hip Replacement,Procedure,Total hip arthroplasty,43346.29,21912.84,32414.02,21433.45,1.98,YNHH,BH
+27447,27251.1,35207.77,40245.3,31982.58,46246.09,Knee Replacement,Procedure,Total knee arthroplasty,46246.09,27251.1,36186.57,18994.99,1.7,YNHH,BH
+43239,2062.61,3261.63,3104.18,2241.18,3408.82,Upper Endoscopy,Procedure,EGD w/ biopsy,3408.82,2062.61,2815.68,1346.21,1.65,YNHH,BH
+99285,2204.77,3306.91,3078.89,2575.02,3527.94,ED Visit Lvl 5,ED Visit,"Emergency dept visit, high severity",3527.94,2204.77,2938.71,1323.17,1.6,YNHH,BH
+45378,1758.98,2632.91,2750.68,1983.98,3066.4,Colonoscopy,Procedure,"Colonoscopy, diagnostic",3066.4,1758.98,2438.59,1307.42,1.74,YNHH,BH
+72148,1456.45,2386.12,2175.33,1780.27,2745.97,MRI Lumbar,Imaging,MRI Lumbar Spine w/o contrast,2745.97,1456.45,2108.83,1289.52,1.89,YNHH,BH
+70553,1850.38,2254.99,2583.7,2142.17,2849.17,MRI Brain,Imaging,MRI Brain w/o & w/ contrast,2849.17,1850.38,2336.08,998.79,1.54,YNHH,BH
+99284,1362.63,1938.01,2166.37,1666.62,2330.39,ED Visit Lvl 4,ED Visit,"Emergency dept visit, moderate severity",2330.39,1362.63,1892.8,967.76,1.71,YNHH,BH
+74177,1394.26,1910.09,2162.92,1654.34,2199.31,CT Abd/Pelvis,Imaging,CT Abdomen & Pelvis w/ contrast,2199.31,1394.26,1864.18,805.05,1.58,YNHH,BH
+93306,1263.72,1589.37,1709.58,1291.94,1822.3,Echocardiogram,Imaging,Transthoracic echocardiogram,1822.3,1263.72,1535.38,558.58,1.44,YNHH,BH
+70450,943.0,1181.91,1263.54,933.46,1454.96,CT Head,Imaging,CT Head/Brain w/o contrast,1454.96,933.46,1155.37,521.5,1.56,YNHH,UCH
+77067,371.04,456.1,471.8,398.24,575.67,Mammogram,Procedure,"Screening mammogram, bilateral",575.67,371.04,454.57,204.63,1.55,YNHH,BH
+71046,238.56,327.92,322.38,276.42,380.48,Chest X-Ray,Imaging,Chest X-ray 2 views,380.48,238.56,309.15,141.92,1.59,YNHH,BH
+99213,161.39,232.35,261.64,206.26,298.66,Office Visit,Office,"Established patient office visit, low complexity",298.66,161.39,232.06,137.27,1.85,YNHH,BH
+80048,118.48,173.83,174.26,124.44,195.51,Metabolic Panel,Lab,Basic metabolic panel,195.51,118.48,157.3,77.03,1.65,YNHH,BH
+93000,121.45,177.74,184.07,128.9,194.3,EKG,Procedure,Electrocardiogram w/ interpretation,194.3,121.45,161.29,72.85,1.6,YNHH,BH
+85025,77.69,117.29,117.63,100.84,132.67,CBC,Lab,Complete blood count w/ differential,132.67,77.69,109.22,54.98,1.71,YNHH,BH
+82565,50.53,77.55,72.25,59.79,88.53,Creatinine,Lab,Creatinine blood test,88.53,50.53,69.73,38.0,1.75,YNHH,BH
+83036,69.1,94.43,89.73,76.57,97.77,HbA1c,Lab,Hemoglobin A1c,97.77,69.1,85.52,28.67,1.41,YNHH,BH
+36415,33.18,47.69,53.07,38.77,53.51,Blood Draw,Lab,Venipuncture / blood draw,53.51,33.18,45.24,20.33,1.61,YNHH,BH

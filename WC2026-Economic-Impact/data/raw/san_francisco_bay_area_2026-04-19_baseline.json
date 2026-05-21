@@ -1,0 +1,13 @@
+{
+  "city": "San Francisco Bay Area",
+  "country": "USA",
+  "venue": "Levi's Stadium",
+  "capacity": 68500,
+  "matches_hosted": 6,
+  "date": "2026-04-19",
+  "date_type": "baseline",
+  "url": "https://www.booking.com/searchresults.html?ss=Santa Clara, California&checkin=2026-04-19&checkout=2026-04-20&group_adults=2&no_rooms=1&nflt=class%3D3%3Bclass%3D4%3Bclass%3D5&order=price",
+  "prices_found": [],
+  "median_price": null,
+  "error": null
+}
