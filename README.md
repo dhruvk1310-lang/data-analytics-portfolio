@@ -1,27 +1,39 @@
-# Data Analytics Portfolio — Dhruva Khanna
+# Data Analytics Portfolio: Dhruva Khanna
 
-A collection of academic projects covering data analysis, visualization, statistical modeling, and optimization across multiple tools and languages.
+Projects and coursework from my M.S. in Business Analytics at Quinnipiac University (4.0 GPA), covering SQL, Python, R, SAS, Excel optimization, Tableau and Power BI.
+
+**Portfolio site:** [dhruvk1310-lang.github.io/dhruvs-portfolio](https://dhruvk1310-lang.github.io/dhruvs-portfolio/)
 
 ---
 
-## Tools & Languages
+## Featured projects
+
+Each one has its own README with the question, the method, the results and a link to the slides.
+
+| Project | Tools | Result | Folder |
+|---|---|---|---|
+| **Supply Chain Network Optimization** | Excel Solver, linear programming | Cut a 3-warehouse, 6-boutique network's distribution cost by 32.9% | [Supply-Chain-Optimization](./Supply-Chain-Optimization) |
+| **IBM HR Attrition Analysis** | SQL, MySQL | Overtime workers leave at 30.5% vs 10.4% for everyone else | [SQL](./SQL) |
+| **Global Developer Survey** | R, tidyverse | 65,437 responses; significant effects, but experience explains only about 2% of pay | [R](./R) |
+| **Sales and Profitability Analysis** | Python, pandas, scikit-learn | A decision tree cut profit-prediction error by 25% vs linear regression | [Python/Final](./Python/Final) |
+| **Heart Disease Risk Segmentation** | SAS, PCA, clustering | Two consistent patient risk groups found by two clustering methods | [SAS](./SAS) |
+
+More projects live in their own repositories:
+[Northeast Heating & Cooling Demand Map](https://github.com/dhruvk1310-lang/northeast-heating-demand-map) (Python, SQL, Tableau, OR-Tools) and
+[Palate, a wine recommendation SaaS](https://github.com/dhruvk1310-lang/palate-wine-recommender) (React, FastAPI, scikit-learn).
+
+---
+
+## Coursework
+
+The rest of this repository is graded coursework, kept as a record of the techniques practiced in each class.
 
 | Folder | Tools | Topics |
 |--------|-------|--------|
-| [Python](./Python) | Python, Jupyter, pandas, scikit-learn | Data cleaning, regression, classification, machine learning |
-| [R](./R) | R, tidyverse, ggplot2 | Statistical analysis, forecasting, geospatial, clustering |
-| [SAS](./SAS) | SAS | Univariate/bivariate analysis, PCA, clustering, ARA |
-| [Data-Visualization](./Data-Visualization) | Tableau, Power BI | Interactive dashboards, storytelling with data |
-| [Advanced-Excel](./Advanced-Excel) | Excel | VLOOKUP, PivotTables, financial functions, macros |
-| [Optimization](./Optimization) | Excel Solver | Linear programming, integer programming, Monte Carlo simulation |
+| [Python](./Python) | Python, Jupyter, pandas, scikit-learn | Data cleaning, regression, classification, hyperparameter tuning |
+| [R](./R) | R, tidyverse, ggplot2 | Statistical tests, forecasting, geospatial analysis, validation |
+| [SAS](./SAS) | SAS | Univariate and bivariate analysis, PCA, clustering |
+| [Data-Visualization](./Data-Visualization) | Tableau, Power BI | Interactive dashboards and data storytelling |
+| [Advanced-Excel](./Advanced-Excel) | Excel | Lookups, PivotTables, financial functions, macros |
+| [Optimization](./Optimization) | Excel Solver | Linear, integer and goal programming, Monte Carlo simulation |
 | [Stats](./Stats) | Excel | Descriptive statistics, hypothesis testing, chi-square |
-
----
-
-## Highlights
-
-- **Python Final Project** — end-to-end ML pipeline on financial data ([notebook](./Python/Final/Final-Project.ipynb))
-- **SAS Final Project** — predictive analysis on heart disease patient data ([code](./SAS/Final/Final-Project.sas))
-- **R Final Project** — full analysis with executive summary ([report](./R/Final-Project/Final.docx))
-- **Tableau/PowerBI Group Project** — collaborative data visualization ([report](./Data-Visualization/Final-Project-Report.pdf))
-- **Monte Carlo Simulation** — risk modeling using Excel ([file](./Optimization/Monte-Carlo-Simulation/Monte-Carlo-Completed.xlsx))
